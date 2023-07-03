@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 
 @Component
 @Entity
-@Table(name = "category")
+@Table(name = "tag")
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter

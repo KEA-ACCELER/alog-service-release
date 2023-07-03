@@ -1,5 +1,6 @@
 package kea.alog.release.domain.note;
 
+import java.beans.JavaBean;
 import java.io.Serializable;
 
 import org.springframework.stereotype.Component;
@@ -13,10 +14,11 @@ import lombok.NoArgsConstructor;
 
 @Component
 @Entity
-@Table(name = "category")
+@Table(name = "note")
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
+@JavaBean
 public class Note extends BaseTimeEntity implements Serializable{
     
     @Id
