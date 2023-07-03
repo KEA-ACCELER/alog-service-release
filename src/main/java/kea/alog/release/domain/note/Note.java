@@ -26,6 +26,12 @@ public class Note extends BaseTimeEntity implements Serializable{
     @Column(name = "note_pk")
     private Long notePk;
 
+    @Column(name = "p_pk")
+    private String pPk;
+
+    @Column(name = "team_pk")
+    private String teamPk;
+
     @Column(name = "note_title", length = 100)
     private String noteTitle;
 
@@ -38,7 +44,7 @@ public class Note extends BaseTimeEntity implements Serializable{
     @Column(name = "note_file_link", length =100)
     private String noteFileLink;
 
-    @Builder
+    @Builder(toBuilder = true)
     public Note(String noteTitle, String noteContent, String noteVersion, String noteFileLink){
         this.noteTitle = noteTitle;
         this.noteContent = noteContent;
