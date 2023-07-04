@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 import kea.alog.release.domain.note.Note;
@@ -11,10 +12,11 @@ import kea.alog.release.domain.note.NoteRepository;
 import kea.alog.release.web.DTO.NoteDTO;
 import lombok.RequiredArgsConstructor;
 
+@Service
 @RequiredArgsConstructor
 public class NoteService {
     @Autowired
-    private final NoteRepository noteRepository;
+    final private NoteRepository noteRepository;
 
     @Transactional
     public Long createNote(NoteDTO.CreateNoteDTO request) { //Redirect를 url값들로 보내달라.
