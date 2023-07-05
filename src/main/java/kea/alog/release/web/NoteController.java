@@ -21,12 +21,20 @@ public class NoteController {
     @GetMapping("/{notePk}")
     public ResponseEntity<Result> getNote(@PathVariable Long notePk){
         NoteDTO.SendNoteDTO note = noteService.getNote(notePk);
-        Result result = Result.builder()
+        if(note.getChkData()){
+            Result result = Result.builder()
                             .isSuccess(true)
                             .data(note)
                             .message("노트 불러오기 완료")
                             .build();
         return ResponseEntity.ok().body(result);
+        } else{
+            Result result = Result.builder()
+                            .isSuccess(false)
+                            .message("노트 불러오기 실패")
+                            .build();
+            return ResponseEntity.badRequest().body(result);
+        }
     }
 
     @GetMapping("/list/{pPk}")

@@ -24,17 +24,17 @@ public class NoteTagController {
         noteTagService.addTag(noteTagDTO);
         Result result = Result.builder()
                             .isSuccess(true)
-                            .message("태그가 추가되었습니다.")
+                            .message("노트태그가 추가되었습니다.")
                             .build();
         return ResponseEntity.ok().body(result);
     }
 
     @DeleteMapping("/deleteTag/{tagId}")
-    public ResponseEntity<Result> deleteTag(@PathVariable Long noteTagId){
-        noteTagService.deleteTag(noteTagId);
+    public ResponseEntity<Result> deleteTag(@PathVariable Long tagId){
+        noteTagService.deleteTag(tagId);
         Result result = Result.builder()
                             .isSuccess(true)
-                            .message("태그가 삭제되었습니다.")
+                            .message("노트태그가 삭제되었습니다.")
                             .build();
         return ResponseEntity.ok().body(result);
     }

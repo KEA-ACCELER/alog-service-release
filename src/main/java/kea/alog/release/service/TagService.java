@@ -25,9 +25,9 @@ public class TagService {
     public TagContentDTO getTag(Long tagId){
         Optional<Tag> optTag = tagRepository.findById(tagId);
         if(optTag.isPresent()){
-            TagContentDTO sendTag = TagContentDTO.builder().tagContent(optTag.get().getTagContent()).build();
+            TagContentDTO sendTag = TagContentDTO.builder().tagContent(optTag.get().getTagContent()).chkData(true).build();
             return sendTag;
-        } return TagContentDTO.builder().build();
+        } return TagContentDTO.builder().chkData(false).build();
     }
 
     @Transactional

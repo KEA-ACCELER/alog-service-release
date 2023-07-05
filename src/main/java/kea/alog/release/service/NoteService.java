@@ -62,10 +62,11 @@ public class NoteService {
                                     .noteContent(note.getNoteContent())
                                     .noteVersion(note.getNoteVersion())
                                     .noteFileLink(note.getNoteFileLink())
+                                    .chkData(true)
                                     .build();
             return noteDTO;
         } else {
-            return null;
+            return NoteDTO.SendNoteDTO.builder().chkData(false).build();
         }
     }
 

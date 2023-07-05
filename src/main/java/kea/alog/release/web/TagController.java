@@ -24,10 +24,17 @@ public class TagController {
     @GetMapping("/{tagId}")
     public ResponseEntity<Result> getTag(@PathVariable Long tagId){
         TagContentDTO tag = tagService.getTag(tagId);
-        Result result = Result.builder().isSuccess(true)
+        if(tag.getChkData()){
+            Result result = Result.builder().isSuccess(true)
                             .message("테그 불러오기 완료")
                             .data(tag).build();
-        return ResponseEntity.ok().body(result);
+            return ResponseEntity.ok().body(result);
+        } else{
+            Result result = Result.builder().isSuccess(false)
+                            .message("테그 불러오기 실패")
+                            .build();
+            return ResponseEntity.badRequest().body(result);
+        }
     }
 
     @PostMapping("/createTag")
