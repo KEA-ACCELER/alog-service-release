@@ -1,5 +1,7 @@
 package kea.alog.release.web;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import kea.alog.release.config.Result;
 import kea.alog.release.service.TagService;
 import kea.alog.release.web.DTO.TagDTO.TagContentDTO;
+import kea.alog.release.web.DTO.TagDTO.TagPrameterDTO;
+import kea.alog.release.web.DTO.TagDTO.TagPageingDTO;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -24,7 +28,7 @@ public class TagController {
     @GetMapping("/{tagId}")
     public ResponseEntity<Result> getTag(@PathVariable Long tagId){
         TagContentDTO tag = tagService.getTag(tagId);
-        if(tag.getChkData()){
+        if(tag.isChkData()){
             Result result = Result.builder().isSuccess(true)
                             .message("테그 불러오기 완료")
                             .data(tag).build();
@@ -35,6 +39,18 @@ public class TagController {
                             .build();
             return ResponseEntity.badRequest().body(result);
         }
+    }
+
+    @GetMapping("/tagList/{currentPage}")
+    public ResponseEntity<Result> getTagList(@PathVariable Long currentPage){
+        TagPageingDTO rspDTO = tagService.getAllList(currentPage);
+        // List<TagPrameterDTO> rspTagList = tagService.getAllList(currentPage);
+        Result result = Result.builder()
+                            .data(rspDTO)
+                            .isSuccess(null)
+                            .message("태그 리스트 불러오기 완료")
+                            .build();
+        return ResponseEntity.ok().body(result);
     }
 
     @PostMapping("/createTag")
