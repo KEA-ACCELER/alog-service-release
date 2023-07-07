@@ -1,14 +1,12 @@
 package kea.alog.release.web;
 
-import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import kea.alog.release.config.Result;
-import kea.alog.release.domain.note.Note;
 import kea.alog.release.service.NoteService;
 import kea.alog.release.web.DTO.NoteDTO;
+import kea.alog.release.web.DTO.NoteDTO.RspNoteListDTO;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -21,7 +19,7 @@ public class NoteController {
     @GetMapping("/{notePk}")
     public ResponseEntity<Result> getNote(@PathVariable Long notePk){
         NoteDTO.SendNoteDTO note = noteService.getNote(notePk);
-        if(note.getChkData()){
+        if(note.ischkData()){
             Result result = Result.builder()
                             .isSuccess(true)
                             .data(note)
@@ -37,16 +35,24 @@ public class NoteController {
         }
     }
 
-    @GetMapping("/list/{pPk}")
-    public ResponseEntity<Result> getAllNote(@PathVariable Long pPk){
+    @GetMapping("/list/{pjId}/{currentPage}")
+    public ResponseEntity<Result> getAllNote(@PathVariable("pjId") Long pjId, @PathVariable("currentPage") Long currentPage){
         Result result;
-        List<Note> responseNote = noteService.getAllNote(pPk);
-        result = Result.builder()
-                        .isSuccess(true)
-                        .message("Note 불러오기 완료")
-                        .data(responseNote)
+        if(currentPage <= 0L){
+            result = Result.builder()
+                        .isSuccess(false)
+                        .message("Bad Request")
                         .build();
-        return ResponseEntity.ok().body(result);
+            return ResponseEntity.badRequest().body(result);
+        } else {
+            RspNoteListDTO responseNote = noteService.getAllNote(pjId, currentPage);
+            result = Result.builder()
+                            .isSuccess(true)
+                            .message("Note 불러오기 완료")
+                            .data(responseNote)
+                            .build();
+            return ResponseEntity.ok().body(result);
+        }
     }
 
     @PostMapping("/createNote")

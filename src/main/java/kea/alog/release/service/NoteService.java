@@ -1,15 +1,22 @@
 package kea.alog.release.service;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 import kea.alog.release.domain.note.Note;
 import kea.alog.release.domain.note.NoteRepository;
 import kea.alog.release.web.DTO.NoteDTO;
+import kea.alog.release.web.DTO.NoteDTO.NoteListDTO;
+import kea.alog.release.web.DTO.NoteDTO.RspNoteListDTO;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -48,9 +55,36 @@ public class NoteService {
         } else return false;
     }
 
-    public List<Note> getAllNote(Long pPk){
-        List<Note> allNote = noteRepository.findAllByPjPk(pPk);
-        return allNote;
+    public RspNoteListDTO getAllNote(Long pjId, Long currentPage){
+        //List<Note> allNote = noteRepository.findAllByPjPk(pPk);
+        
+        int pageSize = 2;//나중에 front랑 상의해서 정해야함
+        //int offset = (((int) currentPage)-1) * pageSize; //맵핑
+        Pageable pageable = PageRequest.of( currentPage.intValue()-1, pageSize, Sort.by("notePk").descending());
+        
+        Page<Note> pagingNote = noteRepository.findAllByPjPk(pjId, pageable);
+        List<NoteListDTO> rspList = new ArrayList<>();
+        if(pagingNote.getContent().size() > 0){
+            for(Note index : pagingNote.getContent()){
+                NoteListDTO addNote = NoteListDTO.builder()
+                                                .notePk(index.getNotePk())
+                                                .pjPk(index.getPjPk())
+                                                .teamPk(index.getTeamPk())
+                                                .noteTitle(index.getNoteTitle())
+                                                .noteContent(index.getNoteContent())
+                                                .noteVersion(index.getNoteVersion())
+                                                .noteFileLink(index.getNoteFileLink())
+                                                .createDate(index.getCreatedDate())
+                                                .modifiedDate(index.getModifiedDate())
+                                                .build();
+                rspList.add(addNote);
+            }
+        }
+        RspNoteListDTO rspNoteListDTO = RspNoteListDTO.builder()
+                                                    .rspList(rspList)
+                                                    .totalPage(pagingNote.getTotalPages())
+                                                    .build();
+        return rspNoteListDTO;
     }
 
     public NoteDTO.SendNoteDTO getNote(Long notePk){
@@ -62,12 +96,9 @@ public class NoteService {
                                     .noteContent(note.getNoteContent())
                                     .noteVersion(note.getNoteVersion())
                                     .noteFileLink(note.getNoteFileLink())
-                                    .chkData(true)
                                     .build();
             return noteDTO;
-        } else {
-            return NoteDTO.SendNoteDTO.builder().chkData(false).build();
-        }
+        } return null;
     }
 
     @Transactional

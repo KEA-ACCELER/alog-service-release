@@ -1,5 +1,8 @@
 package kea.alog.release.web.DTO;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,15 +15,17 @@ public class NoteDTO {
         private String noteContent;
         private String noteVersion;
         private String noteFileLink;
-        private Boolean chkData;
 
         @Builder
-        public SendNoteDTO(String noteTitle, String noteContent, String noteVersion, String noteFileLink, Boolean chkData){
+        public SendNoteDTO(String noteTitle, String noteContent, String noteVersion, String noteFileLink){
             this.noteTitle = noteTitle;
             this.noteContent = noteContent;
             this.noteVersion = noteVersion;
             this.noteFileLink = noteFileLink;
-            this.chkData = chkData;
+        }
+
+        public boolean ischkData() {
+            return noteTitle != null || noteContent != null || noteVersion != null || noteFileLink != null;
         }
     }
 
@@ -64,6 +69,45 @@ public class NoteDTO {
             this.noteContent = noteContent;
             this.noteVersion = noteVersion;
             this.noteFileLink = noteFileLink;
+        }
+    }
+    
+    @Getter
+    @NoArgsConstructor
+    public static class NoteListDTO{
+        private long notePk;
+        private long pjPk;
+        private long teamPk;
+        private String noteTitle;
+        private String noteContent;
+        private String noteVersion;
+        private String noteFileLink;
+        private LocalDateTime createDate;
+        private LocalDateTime modifiedDate;
+
+        @Builder
+        public NoteListDTO(long notePk, long pjPk, long teamPk, String noteTitle, String noteContent, String noteVersion, String noteFileLink, LocalDateTime createDate, LocalDateTime modifiedDate) {
+            this.notePk = notePk;
+            this.pjPk = pjPk;
+            this.teamPk = teamPk;
+            this.noteTitle = noteTitle;
+            this.noteContent = noteContent;
+            this.noteVersion = noteVersion;
+            this.noteFileLink = noteFileLink;
+            this.createDate = createDate;
+            this.modifiedDate = modifiedDate;
+        }
+    }
+    @Getter
+    @NoArgsConstructor
+    public static class RspNoteListDTO{
+        private List<NoteListDTO> rspList;
+        private int totalPage;
+
+        @Builder
+        public RspNoteListDTO(List<NoteListDTO> rspList, int totalPage){
+            this.rspList = rspList;
+            this.totalPage = totalPage;
         }
     }
 }
