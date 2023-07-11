@@ -21,12 +21,21 @@ public class NoteTagController {
 
     @PostMapping("/addTag")
     public ResponseEntity<Result> addTag(@RequestBody NoteTagDTO noteTagDTO){
-        noteTagService.addTag(noteTagDTO);
-        Result result = Result.builder()
-                            .isSuccess(true)
-                            .message("노트태그가 추가되었습니다.")
-                            .build();
-        return ResponseEntity.ok().body(result);
+        if(noteTagService.addTag(noteTagDTO)){
+            Result result = Result.builder()
+                                .isSuccess(true)
+                                .message("노트태그가 추가되었습니다.")
+                                .build();
+            return ResponseEntity.ok().body(result);
+        } else {
+            Result result = Result.builder()
+                                .isSuccess(false)
+                                .message("Failed adding NoteTag")
+                                .build();
+            return ResponseEntity.badRequest().body(result);
+        }
+        
+        
     }
 
     @DeleteMapping("/deleteTag/{tagId}")

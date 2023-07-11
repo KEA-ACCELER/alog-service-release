@@ -57,7 +57,7 @@ public class TagService {
     public TagPageingDTO getAllList(Long currentPage){
         int pageSize = 10;
         Pageable pageable = PageRequest.of(currentPage.intValue() - 1, pageSize, Sort.by("tagPk").descending());
-        Page<Tag> getPage = tagRepository.findAllPage(pageable);
+        Page<Tag> getPage = tagRepository.findAll(pageable);
 
         List<Tag> tagList = getPage.getContent();
         List<TagPrameterDTO> rspTagList = new ArrayList<>();

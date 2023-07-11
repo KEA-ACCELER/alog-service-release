@@ -23,13 +23,13 @@ public class NoteController {
             Result result = Result.builder()
                             .isSuccess(true)
                             .data(note)
-                            .message("노트 불러오기 완료")
+                            .message("Success Load")
                             .build();
         return ResponseEntity.ok().body(result);
         } else{
             Result result = Result.builder()
                             .isSuccess(false)
-                            .message("노트 불러오기 실패")
+                            .message("Failed Load")
                             .build();
             return ResponseEntity.badRequest().body(result);
         }
@@ -48,7 +48,7 @@ public class NoteController {
             RspNoteListDTO responseNote = noteService.getAllNote(pjId, currentPage);
             result = Result.builder()
                             .isSuccess(true)
-                            .message("Note 불러오기 완료")
+                            .message("Success Load NoteList")
                             .data(responseNote)
                             .build();
             return ResponseEntity.ok().body(result);
@@ -57,13 +57,21 @@ public class NoteController {
 
     @PostMapping("/createNote")
     public ResponseEntity<Result> createNote(@RequestBody NoteDTO.CreateNoteDTO request){
-        Long id = noteService.createNote(request);
-        Result result = Result.builder()
-                            .isSuccess(true)
-                            .message("노트가 저장되었습니다.")
-                            .data(id)
-                            .build();
-        return ResponseEntity.ok().body(result);
+        if(request.ischkData()){
+            Long id = noteService.createNote(request);
+            Result result = Result.builder()
+                                .isSuccess(true)
+                                .message("Success Saved.")
+                                .data(id)
+                                .build();
+            return ResponseEntity.ok().body(result);
+        } else{
+            Result result = Result.builder()
+                                .isSuccess(false)
+                                .message("Failed Saved")
+                                .build();
+            return ResponseEntity.badRequest().body(result);
+        }
     }
 
     @PutMapping("/updateNote")
@@ -72,14 +80,14 @@ public class NoteController {
         if(chkSave){
             Result result = Result.builder()
                             .isSuccess(true)
-                            .message("노트가 저장되었습니다.")
+                            .message("Success Update Note.")
                             .build();
             return ResponseEntity.ok().body(result);
         }
         else {
             Result result = Result.builder()
                             .isSuccess(false)
-                            .message("노트가 저장되지 않았습니다.")
+                            .message("Failed Update Note.")
                             .build();
             return ResponseEntity.badRequest().body(result);
         }

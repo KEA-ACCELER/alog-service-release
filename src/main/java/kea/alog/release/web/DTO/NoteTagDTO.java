@@ -1,5 +1,6 @@
 package kea.alog.release.web.DTO;
 
+import kea.alog.release.domain.note.NoteRepository;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

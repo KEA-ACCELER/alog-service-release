@@ -22,7 +22,7 @@ public class NoteTagService {
     final private TagRepository tagRepository;
 
     @Transactional
-    public void addTag(NoteTagDTO noteTagDTO) {
+    public boolean addTag(NoteTagDTO noteTagDTO) {
         Optional<Tag> tag = tagRepository.findById(noteTagDTO.getTagId());
         Optional<Note> note = noteRepository.findById(noteTagDTO.getNoteId());
         if(tag.isPresent() && note.isPresent()){
@@ -31,7 +31,8 @@ public class NoteTagService {
                             .tagPk(tag.get())
                             .build();
             noteTagRepository.save(noteTag);
-        }
+            return true;
+        } else return false;
     }
 
     @Transactional

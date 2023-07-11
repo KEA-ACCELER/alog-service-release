@@ -25,7 +25,7 @@ public class NoteDTO {
         }
 
         public boolean ischkData() {
-            return noteTitle != null || noteContent != null || noteVersion != null || noteFileLink != null;
+            return this.noteTitle != null || this.noteContent != null || this.noteVersion != null || this.noteFileLink != null;
         }
     }
 
@@ -48,6 +48,9 @@ public class NoteDTO {
             this.noteContent = noteContent;
             this.noteVersion = noteVersion;
             this.noteFileLink = noteFileLink;
+        }
+        public boolean ischkData() {
+            return this.noteTitle != null || this.noteContent != null || this.noteVersion != null || this.noteFileLink != null;
         }
     }
 
