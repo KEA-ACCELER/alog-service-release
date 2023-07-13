@@ -27,7 +27,7 @@ public class TagService {
         tagRepository.save(tag);
         return tag.getTagPk();
     }
-
+    @Transactional
     public TagContentDTO getTag(Long tagId){
         Optional<Tag> optTag = tagRepository.findById(tagId);
         if(optTag.isPresent()){
@@ -53,7 +53,7 @@ public class TagService {
             tagRepository.delete(optTag.get());
         }
     }
-
+    @Transactional
     public TagPageingDTO getAllList(Long currentPage){
         int pageSize = 10;
         Pageable pageable = PageRequest.of(currentPage.intValue() - 1, pageSize, Sort.by("tagPk").descending());

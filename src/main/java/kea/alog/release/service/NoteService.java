@@ -32,7 +32,6 @@ public class NoteService {
                             .pjPk(request.getPjPk())
                             .teamPk(request.getTeamPk())
                             .noteContent(request.getNoteContent())
-                            .noteFileLink(request.getNoteFileLink())
                             .noteVersion(request.getNoteVersion())
                             .build();
 
@@ -48,13 +47,12 @@ public class NoteService {
                             .noteTitle(request.getNoteTitle())
                             .noteContent(request.getNoteContent())
                             .noteVersion(request.getNoteVersion())
-                            .noteFileLink(request.getNoteFileLink())
                             .build();
             noteRepository.save(setNote);
             return true;
         } else return false;
     }
-
+    @Transactional
     public RspNoteListDTO getAllNote(Long pjId, Long currentPage){
         //List<Note> allNote = noteRepository.findAllByPjPk(pPk);
         
@@ -73,7 +71,6 @@ public class NoteService {
                                                 .noteTitle(index.getNoteTitle())
                                                 .noteContent(index.getNoteContent())
                                                 .noteVersion(index.getNoteVersion())
-                                                .noteFileLink(index.getNoteFileLink())
                                                 .createDate(index.getCreatedDate())
                                                 .modifiedDate(index.getModifiedDate())
                                                 .build();
@@ -86,7 +83,7 @@ public class NoteService {
                                                     .build();
         return rspNoteListDTO;
     }
-
+    @Transactional
     public NoteDTO.SendNoteDTO getNote(Long notePk){
         Optional<Note> optNote = noteRepository.findById(notePk);
         if(optNote.isPresent()){
@@ -95,7 +92,8 @@ public class NoteService {
                                     .noteTitle(note.getNoteTitle())
                                     .noteContent(note.getNoteContent())
                                     .noteVersion(note.getNoteVersion())
-                                    .noteFileLink(note.getNoteFileLink())
+                                    .createdDate(note.getCreatedDate())
+                                    .modifiedDate(note.getModifiedDate())
                                     .build();
             return noteDTO;
         } return null;

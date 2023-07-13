@@ -3,6 +3,7 @@ package kea.alog.release.web.DTO;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,18 +15,21 @@ public class NoteDTO {
         private String noteTitle;
         private String noteContent;
         private String noteVersion;
-        private String noteFileLink;
+        private LocalDateTime createdDate;
+        private LocalDateTime modifiedDate;
+
 
         @Builder
-        public SendNoteDTO(String noteTitle, String noteContent, String noteVersion, String noteFileLink){
+        public SendNoteDTO(String noteTitle, String noteContent, String noteVersion, LocalDateTime createdDate, LocalDateTime modifiedDate){
             this.noteTitle = noteTitle;
             this.noteContent = noteContent;
             this.noteVersion = noteVersion;
-            this.noteFileLink = noteFileLink;
+            this.createdDate = createdDate;
+            this.modifiedDate = modifiedDate;
         }
 
         public boolean ischkData() {
-            return this.noteTitle != null || this.noteContent != null || this.noteVersion != null || this.noteFileLink != null;
+            return this.noteTitle != null || this.noteContent != null || this.noteVersion != null;
         }
     }
 
@@ -38,19 +42,17 @@ public class NoteDTO {
         private String noteTitle;
         private String noteContent;
         private String noteVersion;
-        private String noteFileLink;
 
         @Builder
-        public CreateNoteDTO(Long teamPk, Long pjPk, String noteTitle, String noteContent, String noteVersion, String noteFileLink){
+        public CreateNoteDTO(Long teamPk, Long pjPk, String noteTitle, String noteContent, String noteVersion){
             this.teamPk = teamPk;
             this.pjPk = pjPk;
             this.noteTitle = noteTitle;
             this.noteContent = noteContent;
             this.noteVersion = noteVersion;
-            this.noteFileLink = noteFileLink;
         }
         public boolean ischkData() {
-            return this.noteTitle != null || this.noteContent != null || this.noteVersion != null || this.noteFileLink != null;
+            return this.noteTitle != null || this.noteContent != null || this.noteVersion != null;
         }
     }
 
@@ -62,16 +64,14 @@ public class NoteDTO {
         private String noteTitle;
         private String noteContent;
         private String noteVersion;
-        private String noteFileLink;
 
         @Builder
-        public UpdateNoteDTO(Long noteId, Long pjPk, String noteTitle, String noteContent, String noteVersion, String noteFileLink){
+        public UpdateNoteDTO(Long noteId, Long pjPk, String noteTitle, String noteContent, String noteVersion){
             this.pjPk = pjPk;
             this.noteId = noteId;
             this.noteTitle = noteTitle;
             this.noteContent = noteContent;
             this.noteVersion = noteVersion;
-            this.noteFileLink = noteFileLink;
         }
     }
     
@@ -89,14 +89,13 @@ public class NoteDTO {
         private LocalDateTime modifiedDate;
 
         @Builder
-        public NoteListDTO(long notePk, long pjPk, long teamPk, String noteTitle, String noteContent, String noteVersion, String noteFileLink, LocalDateTime createDate, LocalDateTime modifiedDate) {
+        public NoteListDTO(long notePk, long pjPk, long teamPk, String noteTitle, String noteContent, String noteVersion, LocalDateTime createDate, LocalDateTime modifiedDate) {
             this.notePk = notePk;
             this.pjPk = pjPk;
             this.teamPk = teamPk;
             this.noteTitle = noteTitle;
             this.noteContent = noteContent;
             this.noteVersion = noteVersion;
-            this.noteFileLink = noteFileLink;
             this.createDate = createDate;
             this.modifiedDate = modifiedDate;
         }

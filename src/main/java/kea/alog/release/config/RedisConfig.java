@@ -6,13 +6,17 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 
+import org.springframework.beans.factory.annotation.Value;
+
 @EnableRedisRepositories
 @Configuration
 public class RedisConfig {
     
-    private int port = 6379;
+    @Value("${spring.redis.lettuce.port}")
+    private int port;
     
-    private String host = "127.0.0.1";
+    @Value("${spring.redis.lettuce.host}")
+    private String host;
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory(){

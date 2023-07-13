@@ -9,7 +9,6 @@ import kea.alog.release.domain.tag.Tag;
 import jakarta.persistence.*;
 import kea.alog.release.domain.note.Note;
 import kea.alog.release.util.BaseTimeEntity;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +18,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "notetag")
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
-@AllArgsConstructor
 @Getter
 public class NoteTag extends BaseTimeEntity implements Serializable{
     
