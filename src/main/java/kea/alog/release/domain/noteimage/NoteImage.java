@@ -12,6 +12,7 @@ import lombok.*;
 @Component
 @Table(name = "noteimg")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Getter
 @JavaBean
 public class NoteImage {
